@@ -131,10 +131,8 @@ class ScheduleController extends Controller
     public function destroy(Schedule $schedule)
     {
         //
-
         $schedule->delete();
 
-        return redirect()->route('cats.index');
+        return redirect()->route('schedules.index');
     }
-    
 }

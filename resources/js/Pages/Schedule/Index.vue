@@ -9,6 +9,7 @@ import { Inertia } from "@inertiajs/inertia";
 
 const form = useForm({
     id: "",
+    title: "",
     first_name: "",
     last_name: "",
     phone_number: "",
@@ -28,12 +29,14 @@ const openModal = (isEdit, schedule = null) => {
     if (isEdit) {
         form.id = schedule.id;
         form.title = "Edit schedule";
-        form.name = schedule.name;
-        form.gender = schedule.gender;
-        form.age_scheduleegory = schedule.age_scheduleegory;
-        form.tags = schedule.tags;
-        form.color = schedule.color;
-        form.image_path = schedule.image_path;
+        form.first_name = schedule.first_name;
+        form.last_name = schedule.last_name;
+        form.phone_number = schedule.phone_number;
+        form.email = schedule.email;
+        form.animal_id = schedule.animal_id;
+        form.animal_name = schedule.animal_name;
+        form.address = schedule.address;
+        form.appointment = schedule.appointment;
     } else {
         form.title = "Add New schedule";
     }
@@ -98,73 +101,87 @@ defineProps({
                 <hr class="my-8 h-px bg-gray-200 border-0 dark:bg-gray-700" />
                 <div class="m-6">
                     <label
-                        for="image_path"
+                        for="first_name"
                         class="block mb-2 text-sm font-medium text-gray-900"
-                        >Image</label
-                    >
-                    <div class="flex justify-center items-center mb-2">
-                        <img
-                            class="rounded-full w-60 h60"
-                            :src="form.image_path"
-                            :alt="form.name"
-                        />
-                    </div>
-
-                    <input
-                        @input="form.image_path = $event.target.files[0]"
-                        class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                        id="image_path"
-                        accept="image/png, image/jpeg"
-                        type="file"
-                    />
-                    <InputError :message="form.errors.image_path" />
-                </div>
-                <div class="m-6">
-                    <label
-                        for="name"
-                        class="block mb-2 text-sm font-medium text-gray-900"
-                        >Name</label
+                        >First Name</label
                     >
                     <input
                         type="text"
-                        id="name"
+                        id="first_name"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        v-model="form.name"
+                        v-model="form.first_name"
                     />
-                    <InputError :message="form.errors.name" />
+                    <InputError :message="form.errors.first_name" />
                 </div>
                 <div class="m-6">
                     <label
-                        for="gender"
+                        for="last_name"
                         class="block mb-2 text-sm font-medium text-gray-900"
-                        >Gender</label
+                        >Last Name</label
                     >
-                    <select
-                        id="gender"
-                        v-model="form.gender"
+                    <input
+                        type="text"
+                        id="last_name"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    >
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                    </select>
-                    <InputError :message="form.errors.gender" />
+                        v-model="form.last_name"
+                    />
+                    <InputError :message="form.errors.last_name" />
                 </div>
                 <div class="m-6">
                     <label
-                        for="age_scheduleegory"
+                        for="phone_number"
                         class="block mb-2 text-sm font-medium text-gray-900"
-                        >Age scheduleegory</label
+                        >Phone Number</label
                     >
-                    <select
-                        id="age_scheduleegory"
-                        v-model="form.age_scheduleegory"
+                    <input
+                        type="text"
+                        id="phone_number"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        v-model="form.phone_number"
+                    />
+                    <InputError :message="form.errors.phone_number" />
+                </div>
+                <div class="m-6">
+                    <label
+                        for="email"
+                        class="block mb-2 text-sm font-medium text-gray-900"
+                        >Email</label
                     >
-                        <option value="Adult">Adult</option>
-                        <option value="Young">Young</option>
-                        <option value="Kitten">Kitten</option>
-                    </select>
-                    <InputError :message="form.errors.age_scheduleegory" />
+                    <input
+                        type="text"
+                        id="email"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        v-model="form.email"
+                    />
+                    <InputError :message="form.errors.email" />
+                </div>
+                <div class="m-6">
+                    <label
+                        for="animal_id"
+                        class="block mb-2 text-sm font-medium text-gray-900"
+                        >Animal ID</label
+                    >
+                    <input
+                        type="text"
+                        id="animal_id"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        v-model="form.animal_id"
+                    />
+                    <InputError :message="form.errors.animal_name" />
+                </div>
+                <div class="m-6">
+                    <label
+                        for="animal_name"
+                        class="block mb-2 text-sm font-medium text-gray-900"
+                        >Animal Name</label
+                    >
+                    <input
+                        type="text"
+                        id="animal_name"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        v-model="form.animal_name"
+                    />
+                    <InputError :message="form.errors.animal_name" />
                 </div>
 
                 <div class="m-6">
@@ -175,25 +192,42 @@ defineProps({
                     >
                     <input
                         type="text"
-                        id="tags"
+                        id="address"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        v-model="form.tags"
+                        v-model="form.address"
                     />
-                    <InputError :message="form.errors.tags" />
+                    <InputError :message="form.errors.address" />
                 </div>
 
                 <div class="m-6">
-                    <label
-                        for="color"
-                        class="block mb-2 text-sm font-medium text-gray-900"
-                        >Color</label
-                    >
-                    <input
-                        type="datetime"
-                        id="color"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        v-model="form.appointment"
-                    />
+                    <div class="relative">
+                        <div
+                            class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+                        >
+                            <svg
+                                aria-hidden="true"
+                                class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                    clip-rule="evenodd"
+                                ></path>
+                            </svg>
+                        </div>
+                        <input
+                            datepicker
+                            datepicker-orientation="bottom right"
+                            type="date"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Select date"
+                            v-model="form.appointment"
+                        />
+                    </div>
+
                     <InputError :message="form.errors.appointment" />
                 </div>
 
@@ -254,7 +288,7 @@ defineProps({
                             <button
                                 @click="openModal(false)"
                                 type="button"
-                                class="flex gap-1 justify-center items-center py-2 px-3 text-sm font-mediumz text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
+                                class="flex gap-1 justify-center items-center py-2 px-3 text-sm font-mediumz text-center rounded-lg text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300"
                             >
                                 <h2>Add schedule</h2>
                                 <svg
@@ -284,10 +318,11 @@ defineProps({
                                     <th scope="col" class="py-3 px-6">
                                         Phone Number
                                     </th>
+                                    <th scope="col" class="py-3 px-6">Email</th>
+                                    <th scope="col" class="py-3 px-6">appointment Date</th>
                                     <th scope="col" class="py-3 px-6">
-                                        Email
+                                        Pet ID
                                     </th>
-                                    <th scope="col" class="py-3 px-6">Pet ID</th>
                                     <th scope="col" class="py-3 px-6">
                                         Action
                                     </th>
@@ -299,15 +334,6 @@ defineProps({
                                     :key="schedule.id"
                                     class="bg-white border-b -gray-700 hover:bg-gray-50"
                                 >
-                                    <!-- first_name
-                                last_name
-                                phone_number
-                                email
-                                animal_id
-                                animal_name
-                                address
-                                appointment -->
-
                                     <td class="py-4 px-6">
                                         {{
                                             schedule.first_name +
@@ -320,6 +346,9 @@ defineProps({
                                     </td>
                                     <td class="py-4 px-6">
                                         {{ schedule.email }}
+                                    </td>
+                                    <td class="py-4 px-6">
+                                        {{ schedule.appointment }}
                                     </td>
                                     <td class="py-4 px-6">
                                         {{ schedule.animal_id }}

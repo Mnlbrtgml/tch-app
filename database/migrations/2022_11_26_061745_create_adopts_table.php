@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('citizenship');
             $table->string('occupation');
             $table->text('radioQuestion');
+            $table->tinyInteger('is_accepted')->default(false);
             $table->timestamps();
         });
     }

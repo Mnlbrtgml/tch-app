@@ -18,7 +18,7 @@ class AdoptController extends Controller
     {
         $cats = Cat::all();
 
-        return Inertia::render('Adopt/Index', [
+        return Inertia::render('Adopt/Client', [
             'cats' => $cats->map(function ($cat) {
                 return [
                     'id' => $cat->id,
@@ -51,6 +51,7 @@ class AdoptController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $request->validate([
             'fname' => 'required',
             'lname' => 'required',
@@ -73,6 +74,7 @@ class AdoptController extends Controller
         $adopt->citizenship = $request->citizenship;
         $adopt->occupation = $request->occupation;
         $adopt->radioQuestion = $request->jsonRadioQuestion;
+        $adopt->is_accepted = false;
         $adopt->save();
 
         return  redirect()->route('adopts.index');

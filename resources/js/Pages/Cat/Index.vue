@@ -74,7 +74,7 @@ defineProps({
     <AppLayout title="Cat">
         <Modal :show="showModal" maxWidth="lg">
             <form @submit.prevent="onSubmit" class="p-4">
-                <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between px-3">
                     <h1 class="font-bold text-xl">{{ form.title }}</h1>
 
                     <button @click="closeModal" type="button" class="">
@@ -94,114 +94,116 @@ defineProps({
                         </svg>
                     </button>
                 </div>
-                <hr class="my-8 h-px bg-gray-200 border-0 dark:bg-gray-700" />
-                <div class="m-6">
-                    <label
-                        for="image_path"
-                        class="block mb-2 text-sm font-medium text-gray-900"
-                        >Image</label
-                    >
-                    <div class="flex justify-center items-center mb-2">
-                        <img
-                            id="modalImg"
-                            class="rounded-full w-60 h60"
-                            :src="form.image_path"
+                <div class="h-[72vh] overflow-auto">
+                    <div class="m-6">
+                        <label
+                            for="image_path"
+                            class="block mb-2 text-sm font-medium text-gray-900"
+                            >Image</label
+                        >
+                        <div class="flex justify-center items-center mb-2">
+                            <img
+                                id="modalImg"
+                                class="rounded-full w-60 h60"
+                                :src="form.image_path"
+                            />
+                        </div>
+
+                        <input
+                            @input="form.image_path = $event.target.files[0]"
+                            class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                            id="image_path"
+                            accept="image/png, image/jpeg"
+                            type="file"
                         />
+                        <InputError :message="form.errors.image_path" />
+                    </div>
+                    <div class="m-6">
+                        <label
+                            for="name"
+                            class="block mb-2 text-sm font-medium text-gray-900"
+                            >Name</label
+                        >
+                        <input
+                            type="text"
+                            id="name"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            v-model="form.name"
+                        />
+                        <InputError :message="form.errors.name" />
+                    </div>
+                    <div class="m-6">
+                        <label
+                            for="gender"
+                            class="block mb-2 text-sm font-medium text-gray-900"
+                            >Gender</label
+                        >
+                        <select
+                            id="gender"
+                            v-model="form.gender"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        >
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                        <InputError :message="form.errors.gender" />
+                    </div>
+                    <div class="m-6">
+                        <label
+                            for="age_category"
+                            class="block mb-2 text-sm font-medium text-gray-900"
+                            >Age Category</label
+                        >
+                        <select
+                            id="age_category"
+                            v-model="form.age_category"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        >
+                            <option value="Adult">Adult</option>
+                            <option value="Young">Young</option>
+                            <option value="Kitten">Kitten</option>
+                        </select>
+                        <InputError :message="form.errors.age_category" />
                     </div>
 
-                    <input
-                        @input="form.image_path = $event.target.files[0]"
-                        class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                        id="image_path"
-                        accept="image/png, image/jpeg"
-                        type="file"
-                    />
-                    <InputError :message="form.errors.image_path" />
-                </div>
-                <div class="m-6">
-                    <label
-                        for="name"
-                        class="block mb-2 text-sm font-medium text-gray-900"
-                        >Name</label
-                    >
-                    <input
-                        type="text"
-                        id="name"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        v-model="form.name"
-                    />
-                </div>
-                <div class="m-6">
-                    <label
-                        for="gender"
-                        class="block mb-2 text-sm font-medium text-gray-900"
-                        >Gender</label
-                    >
-                    <select
-                        id="gender"
-                        v-model="form.gender"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    >
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                    </select>
-                    <InputError :message="form.errors.gender" />
-                </div>
-                <div class="m-6">
-                    <label
-                        for="age_category"
-                        class="block mb-2 text-sm font-medium text-gray-900"
-                        >Age Category</label
-                    >
-                    <select
-                        id="age_category"
-                        v-model="form.age_category"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    >
-                        <option value="Adult">Adult</option>
-                        <option value="Young">Young</option>
-                        <option value="Kitten">Kitten</option>
-                    </select>
-                    <InputError :message="form.errors.age_category" />
-                </div>
+                    <div class="m-6">
+                        <label
+                            for="tags"
+                            class="block mb-2 text-sm font-medium text-gray-900"
+                            >Tags (Separated by comma ",")</label
+                        >
+                        <input
+                            type="text"
+                            id="tags"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            v-model="form.tags"
+                        />
+                        <InputError :message="form.errors.tags" />
+                    </div>
 
-                <div class="m-6">
-                    <label
-                        for="tags"
-                        class="block mb-2 text-sm font-medium text-gray-900"
-                        >Tags (Separated by comma ",")</label
-                    >
-                    <input
-                        type="text"
-                        id="tags"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        v-model="form.tags"
-                    />
-                    <InputError :message="form.errors.tags" />
+                    <div class="m-6">
+                        <label
+                            for="color"
+                            class="block mb-2 text-sm font-medium text-gray-900"
+                            >Color</label
+                        >
+                        <input
+                            type="text"
+                            id="color"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            v-model="form.color"
+                        />
+                        <InputError :message="form.errors.color" />
+                    </div>
                 </div>
-
-                <div class="m-6">
-                    <label
-                        for="color"
-                        class="block mb-2 text-sm font-medium text-gray-900"
-                        >Color</label
+                <div class="flex items-center justify-end py-4 px-6">
+                    <button
+                        type="submit"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
                     >
-                    <input
-                        type="text"
-                        id="color"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        v-model="form.color"
-                    />
-                    <InputError :message="form.errors.color" />
+                        Save
+                    </button>
                 </div>
-
-                <hr class="my-8 h-px bg-gray-200 border-0 dark:bg-gray-700" />
-                <button
-                    type="submit"
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
-                >
-                    Save
-                </button>
             </form>
         </Modal>
 
