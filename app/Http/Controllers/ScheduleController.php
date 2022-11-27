@@ -40,7 +40,29 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'phone_number' => 'required|min:11|max:11',
+            'email' => 'required',
+            'animal_id' => 'required',
+            'animal_name' => 'required',
+            'address' => 'required',
+            'appointment' => 'required',
+        ]);
+
+        $schedule = new Schedule();
+        $schedule->first_name = $request->first_name;
+        $schedule->last_name = $request->last_name;
+        $schedule->phone_number = $request->phone_number;
+        $schedule->email = $request->email;
+        $schedule->animal_id = $request->animal_id;
+        $schedule->animal_name = $request->animal_name;
+        $schedule->address = $request->address;
+        $schedule->appointment = $request->appointment;
+        $schedule->save();
+
+        return  redirect()->route('schedules.index');
     }
 
     /**
@@ -75,6 +97,29 @@ class ScheduleController extends Controller
     public function update(Request $request, Schedule $schedule)
     {
         //
+        $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'phone_number' => 'required|min:11|max:11',
+            'email' => 'required',
+            'animal_id' => 'required',
+            'animal_name' => 'required',
+            'address' => 'required',
+            'appointment' => 'required',
+        ]);
+
+        $schedule->update([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'phone_number' => $request->phone_number,
+            'email' => $request->email,
+            'animal_id' => $request->animal_id,
+            'animal_name' => $request->animal_name,
+            'address' => $request->address,
+            'appointment' => $request->appointment,
+        ]);
+
+        return  redirect()->route('schedules.index');
     }
 
     /**
@@ -86,5 +131,10 @@ class ScheduleController extends Controller
     public function destroy(Schedule $schedule)
     {
         //
+
+        $schedule->delete();
+
+        return redirect()->route('cats.index');
     }
+    
 }

@@ -15,6 +15,14 @@ return new class extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('phone_number');
+            $table->string('email');
+            $table->string('animal_id');
+            $table->string('animal_name');
+            $table->string('address');
+            $table->dateTime('appointment');
             $table->timestamps();
         });
     }

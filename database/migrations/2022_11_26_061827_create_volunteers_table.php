@@ -15,6 +15,15 @@ return new class extends Migration
     {
         Schema::create('volunteers', function (Blueprint $table) {
             $table->id();
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('address');
+            $table->string('number');
+            $table->string('occupation')->nullable();
+            $table->string('email')->nullable();
+            $table->string('age');
+            $table->text('interested_in');
+            $table->text('experience')->nullable();
             $table->timestamps();
         });
     }

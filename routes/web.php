@@ -42,14 +42,10 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::get('/cats', [CatController::class, 'Index'])->name('cats.index');
-Route::post('/cats/store', [CatController::class, 'store'])->name('cats.store');
+Route::resource('cats', CatController::class);
+Route::resource('adopts', AdoptController::class);
+Route::resource('schedules', ScheduleController::class);
+Route::resource('volunteers', VolunteerController::class);
 
-Route::get('/adopts', [AdoptController::class, 'Index'])->name('adopts.index');
-Route::post('/adopts/store', [AdoptController::class, 'store'])->name('adopts.store');
-
-Route::get('/schedules', [ScheduleController::class, 'Index'])->name('schedules.index');
-Route::post('/schedules/store', [ScheduleController::class, 'store'])->name('schedules.store');
-
-Route::get('/volunteers', [VolunteerController::class, 'Index'])->name('volunteers.index');
-Route::post('/volunteers/store', [VolunteerController::class, 'store'])->name('volunteers.store');
+// Route::get('volunteers', [VolunteerController::class, 'index'])->name('volunteers.index');
+// Route::post('volunteers/store', [VolunteerController::class, 'store'])->name('volunteers.store');

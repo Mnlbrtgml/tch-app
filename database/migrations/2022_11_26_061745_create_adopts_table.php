@@ -15,6 +15,16 @@ return new class extends Migration
     {
         Schema::create('adopts', function (Blueprint $table) {
             $table->id();
+            $table->string('cat_id');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('address');
+            $table->string('phone_number');
+            $table->string('age');
+            $table->string('email');
+            $table->string('citizenship');
+            $table->string('occupation');
+            $table->text('radioQuestion');
             $table->timestamps();
         });
     }
