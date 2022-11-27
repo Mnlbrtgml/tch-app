@@ -15,10 +15,22 @@ class VolunteerController extends Controller
      */
     public function index()
     {
-        $volunteer = Volunteer::All();
-
+        $volunteers = Volunteer::all();
         return Inertia::render('Volunteer/Index', [
-            'volunteers' => $volunteer
+            'volunteers' => $volunteers->map(function ($volunteer) {
+                return [
+                    'id' => $volunteer->id,
+                    'first_name' => $volunteer->first_name,
+                    'last_name' => $volunteer->last_name,
+                    'address' => $volunteer->address,
+                    'number' => $volunteer->number,
+                    'occupation' => $volunteer->occupation,
+                    'email' => $volunteer->email,
+                    'age' => $volunteer->age,
+                    'interested_in' => $volunteer->interested_in,
+                    'experience' => $volunteer->experience,
+                ];
+            })
         ]);
     }
 
@@ -32,7 +44,7 @@ class VolunteerController extends Controller
         //
     }
 
-    /**
+    /**x
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -40,7 +52,38 @@ class VolunteerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //first_name
+        // last_name
+        // address
+        // number
+        // occupation
+        // email
+        // age
+        // interested_in
+        // experience
+        $request->validate([
+            'first_name' => 'required|max:50',
+            'last_name' => 'required|max:50',
+            'address' => 'required|max:100',
+            'number' => 'required|min:11|max:11',
+            'occupation' => 'required|max:50',
+            'email' => 'required',
+            'age' => 'required',
+            'experience' => 'required|max:1000',
+        ]);
+        $volunteer = new Volunteer();
+        $volunteer->first_name = $request->first_name;
+        $volunteer->last_name = $request->last_name;
+        $volunteer->address = $request->address;
+        $volunteer->number = $request->number;
+        $volunteer->occupation = $request->occupation;
+        $volunteer->email = $request->email;
+        $volunteer->age = $request->age;
+        $volunteer->interested_in = $request->json_interested_in;
+        $volunteer->experience = $request->experience;
+        $volunteer->save();
+
+        return  redirect()->route('volunteers.index');
     }
 
     /**
@@ -75,6 +118,30 @@ class VolunteerController extends Controller
     public function update(Request $request, Volunteer $volunteer)
     {
         //
+        $request->validate([
+            'first_name' => 'required|max:50',
+            'last_name' => 'required|max:50',
+            'address' => 'required|max:100',
+            'number' => 'required|max:11',
+            'occupation' => 'required|max:50',
+            'email' => 'required',
+            'age' => 'required',
+            'experience' => 'required|max:1000',
+        ]);
+
+        $volunteer->update([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'address' => $request->address,
+            'number' => $request->number,
+            'occupation' => $request->occupation,
+            'email' => $request->email,
+            'age' => $request->age,
+            'interested_in' => $request->json_interested_in,
+            'experience' => $request->experience,
+        ]);
+
+        return  redirect()->route('volunteers.index');
     }
 
     /**
@@ -86,5 +153,8 @@ class VolunteerController extends Controller
     public function destroy(Volunteer $volunteer)
     {
         //
+        $volunteer->delete();
+
+        return  redirect()->route('volunteers.index');
     }
 }

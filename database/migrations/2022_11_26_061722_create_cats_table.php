@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('cats', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('gender');
+            $table->string('age_category');
+            $table->string('tags');
+            $table->string('color');
+            $table->string('image_path');
             $table->timestamps();
         });
     }
