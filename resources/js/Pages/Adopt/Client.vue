@@ -2,7 +2,6 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import Modal from "@/Components/Modal.vue";
 import InputError from "@/Components/InputError.vue";
-
 import { ref } from "vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 
@@ -15,6 +14,7 @@ const form = useForm({
     catAge: "",
     catTags: "",
     catColor: "",
+    userID: "",
     fname: "",
     lname: "",
     address: "",
@@ -26,31 +26,31 @@ const form = useForm({
     radioQuestion: [
         {
             question: "Does anyone in the household have allergies?",
-            answer: "",
+            answer: false,
         },
         {
             question: "Do you own or rent your residence?",
-            answer: "",
+            answer: false,
         },
         {
             question: "Is the cat for yourself?",
-            answer: "",
+            answer: false,
         },
         {
             question: "Are you 18 years old and above?",
-            answer: "",
+            answer: false,
         },
-        {
-            question: "If not, please profive your parent or guardian's name?",
-            answer: "",
-        },
+        // {
+        //     question: "If not, please profive your parent or guardian's name?",
+        //     answer: "",
+        // },
         {
             question: "Have you ever adopted from The Cat House?",
-            answer: "",
+            answer: false,
         },
         {
             question: "Are you interested in adopting a cat?",
-            answer: "",
+            answer: false,
         },
     ],
     jsonRadioQuestion: "",
@@ -61,7 +61,7 @@ const closeModal = () => {
     form.reset();
 };
 
-const openModal = (cat) => {
+const openModal = (cat, userID) => {
     showModal.value = true;
     form.catID = cat.id;
     form.catImg = cat.image_path;
@@ -69,11 +69,11 @@ const openModal = (cat) => {
     form.catColor = cat.color;
     form.catTags = cat.tags;
     form.catName = cat.name;
+    form.userID = userID;
 };
 
 const onSubmit = () => {
     form.jsonRadioQuestion = JSON.stringify(form.radioQuestion);
-    console.log(form)
     form.post(route("adopts.store"), {
         onSuccess: () => {
             closeModal();
@@ -265,7 +265,7 @@ defineProps({
                                         v-model="question.answer"
                                         id="readio-yes"
                                         type="radio"
-                                        value="Yes"
+                                        :value="true"
                                         :name="question.question"
                                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                                     />
@@ -282,7 +282,7 @@ defineProps({
                                         v-model="question.answer"
                                         id="radio-no"
                                         type="radio"
-                                        value="No"
+                                        :value="false"
                                         :name="question.question"
                                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                                     />
@@ -321,7 +321,7 @@ defineProps({
                         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-content-center"
                     >
                         <button
-                            @click="openModal(cat)"
+                            @click="openModal(cat, $page.props.user.id)"
                             v-for="cat in cats"
                             class="p-4 border rounded-xl m-2"
                         >
@@ -330,8 +330,12 @@ defineProps({
                                 :src="cat.image_path"
                             />
                             <div class="text-center mt-4">
-                                <p class="text-lg font-bold">{{`Cat ID: ${cat.id}`}}</p>
-                                <p class="font-bold">{{ `Name: ${cat.name}` }}</p>
+                                <p class="text-lg font-bold">
+                                    {{ `Cat ID: ${cat.id}` }}
+                                </p>
+                                <p class="font-bold">
+                                    {{ `Name: ${cat.name}` }}
+                                </p>
                                 <p class="">{{ `Age: ${cat.age_category}` }}</p>
                                 <p class="">{{ `Tags: ${cat.tags}` }}</p>
                                 <p class="">{{ `Color: ${cat.color}` }}</p>

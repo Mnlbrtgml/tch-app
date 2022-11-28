@@ -21,6 +21,15 @@ class ScheduleController extends Controller
             'schedules' => $schedule
         ]);
     }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function client()
+    {
+        return Inertia::render('Schedule/Index');
+    }
 
     /**
      * Show the form for creating a new resource.
