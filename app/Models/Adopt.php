@@ -11,6 +11,7 @@ class Adopt extends Model
 
     protected $fillable = [
         'cat_id',
+        'user_id',
         'first_name',
         'last_name',
         'address',
@@ -20,5 +21,6 @@ class Adopt extends Model
         'citizenship',
         'occupation',
         'radioQuestion',
+        'is_accepted',
     ];
 }

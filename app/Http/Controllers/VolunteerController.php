@@ -33,6 +33,15 @@ class VolunteerController extends Controller
             })
         ]);
     }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function client()
+    {
+        return Inertia::render('Volunteer/Index');
+    }
 
     /**
      * Show the form for creating a new resource.

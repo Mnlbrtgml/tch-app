@@ -34,6 +34,12 @@ class CatController extends Controller
         ]);
     }
 
+    public function client()
+    {
+        //
+        return Inertia::render('Cat/Index');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -117,7 +123,7 @@ class CatController extends Controller
         if (FacadesRequest::file('image_path')) {
             $image = FacadesRequest::file('image_path');
         }
-        
+
         $request->validate([
             'name' => 'required|max:255',
             'gender' => 'required|max:255',

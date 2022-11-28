@@ -16,8 +16,33 @@ class AdoptController extends Controller
      */
     public function index()
     {
-        $cats = Cat::all();
 
+        $adopts = Adopt::query()->get(['*'])->where('is_accepted', '=', false);
+
+        return Inertia::render('Adopt/Index', [
+            'adopts' => $adopts->map(function ($adopt) {
+                return [
+                    'cat_id' => $adopt->cat_id,
+                    'user_id' => $adopt->user_id,
+                    'first_name' => $adopt->first_name,
+                    'last_name' => $adopt->last_name,
+                    'address' => $adopt->address,
+                    'phone_number' => $adopt->phone_number,
+                    'age' => $adopt->age,
+                    'email' => $adopt->email,
+                    'citizenship' => $adopt->citizenship,
+                    'occupation' => $adopt->occupation,
+                    'radioQuestion' => $adopt->radioQuestion,
+                    'is_accepted' => $adopt->is_accepted,
+                ];
+            })
+        ]);
+        // return Inertia::render('Adopt/Index');
+    }
+
+    public function client()
+    {
+        $cats = Cat::all();
         return Inertia::render('Adopt/Client', [
             'cats' => $cats->map(function ($cat) {
                 return [
@@ -51,7 +76,6 @@ class AdoptController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
         $request->validate([
             'fname' => 'required',
             'lname' => 'required',
@@ -65,6 +89,7 @@ class AdoptController extends Controller
 
         $adopt = new Adopt();
         $adopt->cat_id = $request->catID;
+        $adopt->user_id = $request->userID;
         $adopt->first_name = $request->fname;
         $adopt->last_name = $request->lname;
         $adopt->address = $request->address;
@@ -77,7 +102,7 @@ class AdoptController extends Controller
         $adopt->is_accepted = false;
         $adopt->save();
 
-        return  redirect()->route('adopts.index');
+        return  redirect()->route('adopts.client');
     }
 
     /**
@@ -112,33 +137,38 @@ class AdoptController extends Controller
     public function update(Request $request, Adopt $adopt)
     {
         //
-        // $request->validate([
-        //     'fname' => 'required',
-        //     'lname' => 'required',
-        //     'address' => 'required',
-        //     'phoneNumber' => 'required|min:11|max:11',
-        //     'age' => 'required',
-        //     'email' => 'required',
-        //     'citizenship' => 'required',
-        //     'occupation' => 'required',
-        // ]);
+        $request->validate([
+            'cat_id' => 'required',
+            'user_id' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required|min:11|max:11',
+            'address' => 'required',
+            'email' => 'required',
+            'citizenship' => 'required',
+            'occupation' => 'required',
+        ]);
 
-        // $adopt->update(
-        //     [
-        //         'cat_id' => $request->catID,
-        //         'first_name' => $request->fname,
-        //         'last_name' => $request->lname,
-        //         'address' => $request->address,
-        //         'phone_number' => $request->phoneNumber,
-        //         'age' => $request->age,
-        //         'email' => $request->email,
-        //         'citizenship' => $request->citizenship,
-        //         'occupation' => $request->occupation,
-        //         'radioQuestion' => $request->jsonRadioQuestion,
-        //     ]
-        // );
+        dd($request->cat_id);
 
-        // return  redirect()->route('adopts.index');
+        $adopt->update(
+            [
+                'cat_id' => $request->cat_id,
+                'user_id' => $request->user_id,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'address' => $request->address,
+                'phone_number' => $request->phone_number,
+                'age' => $request->age,
+                'email' => $request->email,
+                'citizenship' => $request->citizenship,
+                'occupation' => $request->occupation,
+                'radioQuestion' => $request->radioQuestion,
+                'is_accepted' => true,
+            ]
+        );
+
+
+        return  redirect()->route('adopts.index');
     }
 
     /**
@@ -150,5 +180,8 @@ class AdoptController extends Controller
     public function destroy(Adopt $adopt)
     {
         //
+        $adopt->delete();
+
+        return  redirect()->route('adopts.index');
     }
 }

@@ -49,7 +49,7 @@ const closeModal = () => {
 
 const onDestroy = (id) => {
     if (confirm("Are you sure?")) {
-        Inertia.delete(route("schedules.destroy", id));
+        Inertia.delete(route("clientadopt.destroy", id));
     }
 };
 
@@ -70,7 +70,7 @@ const onSubmit = () => {
 };
 
 defineProps({
-    schedules: Array,
+    adopts: Array,
 });
 </script>
 
@@ -284,28 +284,6 @@ defineProps({
                                     placeholder="Search for items"
                                 />
                             </div>
-
-                            <button
-                                @click="openModal(false)"
-                                type="button"
-                                class="flex gap-1 justify-center items-center py-2 px-3 text-sm font-mediumz text-center rounded-lg text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300"
-                            >
-                                <h2>Add schedule</h2>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    stroke="currentColor"
-                                    class="w-6 h-6"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                                    />
-                                </svg>
-                            </button>
                         </div>
                         <table
                             class="w-full text-sm text-left text-gray-500 -gray-400"
@@ -320,10 +298,10 @@ defineProps({
                                     </th>
                                     <th scope="col" class="py-3 px-6">Email</th>
                                     <th scope="col" class="py-3 px-6">
-                                        appointment Date
+                                        Pet ID
                                     </th>
                                     <th scope="col" class="py-3 px-6">
-                                        Pet ID
+                                        Status
                                     </th>
                                     <th scope="col" class="py-3 px-6">
                                         Action
@@ -332,31 +310,31 @@ defineProps({
                             </thead>
                             <tbody>
                                 <tr
-                                    v-for="schedule in schedules"
-                                    :key="schedule.id"
+                                    v-for="adopt in adopts"
+                                    :key="adopt.id"
                                     class="bg-white border-b -gray-700 hover:bg-gray-50"
                                 >
                                     <td class="py-4 px-6">
                                         {{
-                                            schedule.first_name +
+                                            adopt.first_name +
                                             " " +
-                                            schedule.last_name
+                                            adopt.last_name
                                         }}
                                     </td>
                                     <td class="py-4 px-6">
-                                        {{ schedule.phone_number }}
+                                        {{ adopt.phone_number }}
                                     </td>
                                     <td class="py-4 px-6">
-                                        {{ schedule.email }}
+                                        {{ adopt.email }}
                                     </td>
                                     <td class="py-4 px-6">
-                                        {{ schedule.appointment }}
+                                        {{ adopt.cat_id }}
                                     </td>
                                     <td class="py-4 px-6">
-                                        {{ schedule.animal_id }}
+                                        {{ adopt.is_accepted ? 'Accepted' : 'Pending' }}
                                     </td>
                                     <td class="flex gap-1 py-4 px-6">
-                                        <button
+                                        <!-- <button
                                             @click="openModal(true, schedule)"
                                             type="button"
                                             class="flex items-center gap-1 py-2 px-3 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -375,9 +353,9 @@ defineProps({
                                                     d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
                                                 />
                                             </svg>
-                                        </button>
+                                        </button> -->
                                         <button
-                                            @click="onDestroy(schedule.id)"
+                                            @click="onDestroy(adopt.id)"
                                             type="button"
                                             class="flex items-center gap-1 py-2 px-3 text-xs font-medium text-center text-white bg-red-700 hover:bg-red-800 rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                                         >
@@ -400,7 +378,13 @@ defineProps({
                                 </tr>
                             </tbody>
                         </table>
-                        <nav
+                        <div
+                            class="text-center text-xl w-full p-4"
+                            v-if="adopts == 0"
+                        >
+                            You have no pending schedule..
+                        </div>
+                        <!-- <nav
                             class="flex justify-between items-center p-4"
                             aria-label="Table navigation"
                         >
@@ -494,7 +478,7 @@ defineProps({
                                     </a>
                                 </li>
                             </ul>
-                        </nav>
+                        </nav> -->
                     </div>
                 </div>
             </div>
